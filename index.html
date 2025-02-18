@@ -22,7 +22,7 @@
 body {
     
         background-image: url('Barabg.png');
-        background-size: 2500px; /* Adjusts image size */
+        background-size: cover; /* Adjusts image size */
         background-position: center; /* Centers the image */
         background-repeat: no-repeat; /* Prevents repetition */
     font-family: Arial, sans-serif;
@@ -42,10 +42,11 @@ body {
 /* Grid container for products */
 .product-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);  /* 4 items per row */
-    gap: 20px;  /* Space between products */
-    margin-bottom: 40px;  /* Space after each row */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 3%;
 }
+
 
 
 .clothing-item {
@@ -57,7 +58,7 @@ body {
 
 /* Image scaling */
 img {
-    width: 200px; /* Makes the image fill the container */
+    max-width: 200px; /* Makes the image fill the container */
     height: auto; /* Maintain aspect ratio */
     max-height: 250px; /* Max height for consistency */
     object-fit: cover; /* Ensures image doesn't stretch and stays contained within the box */
@@ -67,6 +68,21 @@ img {
 /* Customer Info Styling */
 .customer-info {
     margin-bottom: 30px;
+}
+
+input {
+    width: 90%;
+    max-width: 400px;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 42, 255, 0.56);
+    padding: 20px;
+    position: relative; /* Change to static if needed */
 }
 
 /* Logo Styling */
@@ -404,38 +420,43 @@ img {
 
 
     <script>
-        function sendEmail(productId) {
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const address = document.getElementById("address").value;
+function sendEmail(productId) {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("address").value;
 
-            if (!name || !email || !address) {
-                alert("Please enter your name, email, and address before proceeding.");
-                return; // Don't proceed if any field is empty
-            }
+    if (!name || !email || !address) {
+        alert("Please enter your name, email, and address before proceeding.");
+        return;
+    }
 
-            const size = document.getElementById(`size-${productId}`).value;
-            const color = document.getElementById(`color-${productId}`).value;
-            const clothingName = document.querySelectorAll('.clothing-item')[productId - 1].querySelector('p').textContent;
+    const size = document.getElementById(`size-${productId}`).value;
+    const color = document.getElementById(`color-${productId}`).value;
+    const clothingName = document.querySelectorAll('.clothing-item')[productId - 1].querySelector('p').textContent;
 
-            const subject = encodeURIComponent("New Clothing Order");
-            const body = encodeURIComponent(
-                `New order received:\n\n` +
-                `Clothing Item: ${clothingName}\n` +
-                `Size: ${size}\n` +
-                `Color: ${color}\n\n` +
-                `Customer Details:\n` +
-                `Name: ${name}\n` +
-                `Email: ${email}\n` +
-                `Address: ${address}\n` +
-                `Information: Please click on send to place order. You will get a mail for your delivery time.`
-            );
+    const subject = encodeURIComponent("New Clothing Order");
+    const body = encodeURIComponent(
+        `New order received:\n\n` +
+        `Clothing Item: ${clothingName}\n` +
+        `Size: ${size}\n` +
+        `Color: ${color}\n\n` +
+        `Customer Details:\n` +
+        `Name: ${name}\n` +
+        `Email: ${email}\n` +
+        `Address: ${address}\n\n` +
+        `Please send this email to confirm your order.`
+    );
 
-            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com&su=${subject}&body=${body}`;
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com&su=${subject}&body=${body}`;
+    const mailtoLink = `mailto:rafcruycke3@gmail.com?subject=${subject}&body=${body}`;
 
-            window.open(gmailLink, "_blank");
-            
-        }
+    if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+        window.location.href = mailtoLink; // iOS devices use Mail app
+    } else {
+        window.open(gmailLink, "_blank"); // Opens Gmail by default
+    }
+}
+
         
     </script>
 
