@@ -48,6 +48,46 @@ body {
 }
 
 
+.sidenav {
+  display: none;
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+}
+
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: left;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
 
 .clothing-item {
     display: block;
@@ -58,7 +98,7 @@ body {
 
 /* Image scaling */
 img {
-    max-width: 200px; /* Makes the image fill the container */
+    max-width: 250px; /* Makes the image fill the container */
     height: auto; /* Maintain aspect ratio */
     max-height: 250px; /* Max height for consistency */
     object-fit: cover; /* Ensures image doesn't stretch and stays contained within the box */
@@ -87,10 +127,13 @@ input {
 
 /* Logo Styling */
 .logo {
+    position: static;
     display: block;
     margin: 0 auto;
     width: 150px;  /* Adjust the size of the logo */
     margin-top: 20px;  /* Space from top of the page */
+    margin-bottom: 10%;
+    right: 40%;
 }
 
 /* Instagram */
@@ -106,17 +149,54 @@ input {
     padding-bottom: auto;
 }
 
+.scroll-button {
+            position: fixed; /* Keeps it in place while scrolling */
+            bottom: 90%; /* Adjusts the button's position from the bottom */
+            right: 110; /* Adjusts the button's position from the right */
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .scroll-button:hover {
+            background-color: rgb(63, 63, 65);
+        }
+
+
 
 
 
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Logo at the Top Center -->
-        <img src="logo.png" alt="Logo" class="logo">
 
-        <h2>Bara Shop</h2>
+    
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="About.html ">About Us</a>
+        <a href="ContactUs.html">Contact Us</a>
+      </div>
+      <div style="margin-left: -95%;">
+        <span class="scroll-button" style="font-size:30px;cursor:pointer;"  onclick="openNav()">&#9776;</span>
+      </div>
+
+      <div>
+        <p1>
+
+        </p1>
+      </div>
+      
+
+
+    <div class="container">
+        <div>
+                  <!-- Logo at the Top Center -->
+        <img src="logo.png" alt="Logo" class="logo">  
+        </div>
+
+        
 
         <!-- Customer Info (Name, Email, Address) -->
         <div style="
@@ -124,9 +204,11 @@ input {
         color: white; 
         padding: 20px; 
         text-align: center; 
-        position: static;; 
-        bottom: 5%; 
-        width: 100%;"  class="customer-info">
+        position: static;
+        bottom: 5%;
+        height: 175px; 
+        width: 100%;
+        text-anchor: middle;"  class="customer-info">
             <label for="name">Your Name:</label>
             <input type="text" id="name" required>
             <br><br>
@@ -361,7 +443,7 @@ input {
                             <p> Price: €25 </p>
                             <button onclick="sendEmail(7)">Buy Bara Lighter Sweater</button>
                     </div>
-                                        <!-- Product 7 -->
+                                        <!-- Product 8 -->
                                         <div style="
                                         background-color: rgba(0, 0, 0, 0.642); 
                                         color: white; 
@@ -370,10 +452,10 @@ input {
                                         position: static;; 
                                         bottom: 5%; 
                                         width: 100%;" class="clothing-item">
-                                            <img src="logo.png" alt="Coming Soon">
+                                            <img src="jeans.png" alt="Coming Soon">
                                             <p>Coming Soon</p>
-                                            <label for="size-7">Size:</label>
-                                            <select id="size-7">
+                                            <label for="size-8">Size:</label>
+                                            <select id="size-8">
                                                 <option value="S">S</option>
                                                 <option value="M">M</option>
                                                 <option value="L">L</option>
@@ -381,15 +463,17 @@ input {
                                                 <option value="XXL">XXL</option>
                                             </select>
                                             <br>
-                                            <label for="color-7">Color:</label>
-                                            <select id="color-7">
-                                                <option value="Light Blue">Light Blue</option>
+                                            <label for="color-8">Color:</label>
+                                            <select id="color-8">
+                                                <option value=""></option>
                                             </select>
                                             <br><br>
-                                            <p> Price: €25 </p>
-                                            <button onclick="sendEmail(0)">Buy Bara Lighter Sweater</button>
+                                            <p> Price: €50 </p>
+                                            <button onclick="sendEmail(8)">Buy Bara Lighter Sweater</button>
                                     </div>
                                 </div>
+                                  
+
 
         <div style="
     background-color: rgba(0, 42, 255, 0.56); 
@@ -398,8 +482,11 @@ input {
     text-align: center; 
     position: static;; 
     bottom: 5%; 
-    width: 100%;">
+    width: 96.7%;">
     <body>
+        <div>
+            <h3> Our Social Medias</h3>
+        </div>
         <div style="display: flex; justify-content: center; gap: 10px;">
             <a href="https://www.instagram.com/bara.photografie/" target="_blank"><img src="instagram.png" alt="Instagram" class="Instagram"></a>
             <a href="https://www.tiktok.com/@officialbara.be?lang=nl-NL" target="_blank"><img src="TikTok.png" alt="Instagram" class="Instagram"></a>
@@ -412,15 +499,19 @@ input {
             <h3> Contact Us </h3>
             <a> For any inquiries, please reach out to us via email: rafcruycke3@gmail.com. </a>
         </div>
-</div>
-
-
-   
-        
+</div>        
 
 
     <script>
-function sendEmail(productId) {
+                                          function openNav() {
+                                    document.getElementById("mySidenav").style.display = "block";
+                                  }
+                                  
+                                  function closeNav() {
+                                    document.getElementById("mySidenav").style.display = "none";
+                                  }
+                                  
+                                  function sendEmail(productId) {
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const address = document.getElementById("address").value;
@@ -444,7 +535,8 @@ function sendEmail(productId) {
         `Name: ${name}\n` +
         `Email: ${email}\n` +
         `Address: ${address}\n\n` +
-        `Please send this email to confirm your order.`
+        `You will receive an email with information for payment and for delivery.\n` +
+        `Instructions: Please send this email to confirm your order.`
     );
 
     const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com&su=${subject}&body=${body}`;
