@@ -48,44 +48,62 @@ body {
 }
 
 
-.sidenav {
-  display: none;
-  height: 100%;
-  width: 250px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 60px;
-}
+        /* Container for the menu */
+        .sidenav {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;  /* Initially hidden */
+            background-color: #111;
+            z-index: 1;
+            padding-top: 60px;
+            transition: left 0.3s ease;  /* Smooth transition for opening */
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        /* Close button */
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
 
 
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-}
+        /* Animation effect for sliding in the sidenav */
+        @keyframes slideIn {
+            from {
+                left: -250px;  /* Hidden off-screen */
+            }
+            to {
+                left: 0;  /* Fully visible */
+            }
+        }
 
-.sidenav a:hover {
-  color: #f1f1f1;
-}
+        /* When the sidenav is open */
+        .open {
+            left: 0;
+            animation: slideIn 0.5s forwards;  /* Slide in animation */
+        }
 
-.sidenav .closebtn {
-  position: left;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+        /* Media query for smaller screens */
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
 
 
 
@@ -164,6 +182,8 @@ input {
             background-color: rgb(63, 63, 65);
         }
 
+        
+
 
 
 
@@ -209,20 +229,20 @@ input {
         height: 175px; 
         width: 100%;
         text-anchor: middle;"  class="customer-info">
-            <label for="name">Your Name:</label>
-            <input type="text" id="name" required>
+            <label for="name"><b>Your Name:</b></label>
+            <input type="text" id="name" required placeholder="Your name" style="background: rgb(167, 167, 167); color: aqua;">
             <br><br>
 
-            <label for="email">Your Email:</label>
-            <input type="email" id="email" required>
+            <label for="email"><b>Your Email:</b></label>
+            <input type="email" id="email" required placeholder="your Email Adress" style="background: rgb(167, 167, 167); color: aqua;">
             <br><br>
 
-            <label for="address">Your Address:</label>
-            <input type="text" id="address" required>
+            <label for="address"><b>Your Address:</b></label>
+            <input type="text" id="address" required placeholder="Your Adress" style="background: rgb(167, 167, 167); color: aqua;">
             <br><br>
         </div>
 
-        <div class="content">
+        <div class="content"> 
             <!-- Product Row -->
             <div class="product-row">
                 <!-- Product 1 -->
@@ -255,7 +275,7 @@ input {
                     </select>
                     <br><br>
                     <p> Price: €15 </p>
-                    <button onclick="sendEmail(1)">Buy Bara T-Shirt</button>
+                    <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(1)"><b>Order Now</b></button>
                 </div>
 
                 <!-- Product 2 -->
@@ -288,7 +308,7 @@ input {
                     </select>
                     <br><br>
                     <p> Price: €15 </p>
-                    <button onclick="sendEmail(2)">Buy Bara Tshirt Compas</button>
+                    <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(2)"><b>Order Now</b></button>
                 </div>
 
                 <!-- Product 3 -->
@@ -317,7 +337,7 @@ input {
                     </select>
                     <br><br>
                     <p> Price: €15 </p>
-                    <button onclick="sendEmail(3)">Buy Bara T-shirt White</button>
+                    <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(3)"><b>Order Now</b></button>
                 </div>
 
                 <!-- Product 4 -->
@@ -348,7 +368,7 @@ input {
                     </select>
                     <br><br>
                     <p> Price: €4 </p>
-                    <button onclick="sendEmail(4)">Buy Bara White Socks</button>
+                    <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(4)"><b>Order Now</b></button>
                 </div>
             </div>
             
@@ -383,7 +403,7 @@ input {
                 </select>
                 <br><br>
                 <p> Price: €4 </p>
-                <button onclick="sendEmail(5)">Buy Bara Black Socks</button>
+                <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(5)"><b>Order Now</b></button>
         </div>
 
 
@@ -413,7 +433,7 @@ input {
                     </select>
                     <br><br>
                     <p> Price: €25 </p>
-                    <button onclick="sendEmail(6)">Buy Bara Radio Sweater</button>
+                    <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(6)"><b>Order Now</b></button>
             </div>
                         <!-- Product 7 -->
                         <div style="
@@ -441,7 +461,7 @@ input {
                             </select>
                             <br><br>
                             <p> Price: €25 </p>
-                            <button onclick="sendEmail(7)">Buy Bara Lighter Sweater</button>
+                            <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(7)"><b>Order Now</b></button>
                     </div>
                                         <!-- Product 8 -->
                                         <div style="
@@ -469,7 +489,7 @@ input {
                                             </select>
                                             <br><br>
                                             <p> Price: €50 </p>
-                                            <button onclick="sendEmail(8)">Buy Bara Lighter Sweater</button>
+                                            <button style="background-color: rgb(255, 208, 0);" onclick="sendEmail(8)"><b>Order Now</b></button>
                                     </div>
                                 </div>
                                   
@@ -503,13 +523,15 @@ input {
 
 
     <script>
-                                          function openNav() {
-                                    document.getElementById("mySidenav").style.display = "block";
-                                  }
-                                  
-                                  function closeNav() {
-                                    document.getElementById("mySidenav").style.display = "none";
-                                  }
+
+function openNav() {
+            document.getElementById("mySidenav").classList.add('open');
+        }
+
+        // Close side navigation
+        function closeNav() {
+            document.getElementById("mySidenav").classList.remove('open');
+        }
                                   
                                   function sendEmail(productId) {
     const name = document.getElementById("name").value;
