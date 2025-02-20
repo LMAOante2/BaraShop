@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fireworks Background</title>
+    <style>
+        /* Make the background cover the entire viewport */
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #000; /* Dark background for better visibility */
+        }
+
+        /* Style for the fireworks canvas */
+        #fireworksCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Disable canvas interaction */
+        }
+    </style>
+</head>
+<body>
+
+    <div style="color: rgb(255, 255, 255); margin-left: 45%; margin-top: 27%; font-size: xx-large;">
+        <h3> Thank You </h3>
+    </div>
+    <div>
+        <a style="color: white; background: rgb(0, 0, 0); margin-left: 46.5%; font-size: larger;" href="shop.html">Go Back To Shop</a>
+    </div>
+
+    <!-- Canvas element for fireworks animation -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <script>
+        // Get the canvas element and set up the context
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Create a random color generator for fireworks
+        function randomColor() {
+            const colors = ['#ff0044', '#ffcc00', '#00ff00', '#00ccff', '#9900cc', '#ff6699'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Firework particle class
+        class Particle {
+            constructor(x, y, color, radius, speed, direction) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.radius = radius;
+                this.speed = speed;
+                this.direction = direction;
+                this.life = 100;
+            }
+
+            // Update particle position and properties
+            update() {
+                this.x += this.speed * Math.cos(this.direction);
+                this.y += this.speed * Math.sin(this.direction);
+                this.life -= 2;
+            }
+
+            // Draw the particle on canvas
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // Firework class for launching fireworks
+        class Firework {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.particles = [];
+                this.launch();
+            }
+
+            // Launch the fireworks by generating particles
+            launch() {
+                const numParticles = 100;
+                const angleIncrement = (Math.PI * 2) / numParticles;
+                const speed = Math.random() * 5 + 2;
+
+                for (let i = 0; i < numParticles; i++) {
+                    const angle = i * angleIncrement;
+                    const color = randomColor();
+                    const radius = Math.random() * 3 + 1;
+                    this.particles.push(new Particle(this.x, this.y, color, radius, speed, angle));
+                }
+            }
+
+            // Update and draw the fireworks particles
+            update() {
+                for (let i = 0; i < this.particles.length; i++) {
+                    const p = this.particles[i];
+                    p.update();
+                    p.draw();
+                    if (p.life <= 0) {
+                        this.particles.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        // Array to hold the fireworks
+        const fireworks = [];
+
+        // Generate new fireworks at random positions
+        function generateFireworks() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            fireworks.push(new Firework(x, y));
+        }
+
+        // Animation loop to update and draw the fireworks
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < fireworks.length; i++) {
+                fireworks[i].update();
+            }
+
+            // Generate new fireworks occasionally
+            if (Math.random() < 0.05) {
+                generateFireworks();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation
+        animate();
+    </script>
+
+</body>
+</html>
