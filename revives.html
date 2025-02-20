@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .review-container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .stars-container {
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .star {
+            color: gray;
+            transition: color 0.3s ease-in-out;
+        }
+        .star.selected {
+            color: gold;
+        }
+        .reviews-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .review {
+            background: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .stars {
+            font-size: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Customer Reviews</h1>
+    
+    <div class="review-container">
+        <h2>Leave a Review</h2>
+        <div class="stars-container">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <textarea id="reviewText" placeholder="Write your review here..."></textarea><br>
+        <button onclick="submitReview()">Submit</button>
+
+        <h2>Recent Reviews</h2>
+        <div id="reviewsList" class="reviews-list">
+            <?php include 'fetch_reviews.php'; ?>
+        </div>
+    </div>
+
+    <script>
+        let selectedRating = 0;
+
+        document.querySelectorAll(".star").forEach(star => {
+            star.addEventListener("click", function () {
+                selectedRating = parseFloat(this.getAttribute("data-value"));
+                highlightStars(selectedRating);
+            });
+
+            star.addEventListener("mouseover", function () {
+                highlightStars(parseFloat(this.getAttribute("data-value")));
+            });
+
+            star.addEventListener("mouseleave", function () {
+                highlightStars(selectedRating);
+            });
+        });
+
+        function highlightStars(rating) {
+            document.querySelectorAll(".star").forEach(star => {
+                let value = parseFloat(star.getAttribute("data-value"));
+                star.classList.toggle("selected", value <= rating);
+            });
+        }
+
+        function submitReview() {
+            let reviewText = document.getElementById("reviewText").value;
+            if (reviewText.trim() === "" || selectedRating === 0) {
+                alert("Please enter a review and select a rating.");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("review", reviewText);
+            formData.append("rating", selectedRating);
+
+            fetch("save_review.php", {
+                method: "POST",
+                body: formData
+            }).then(() => {
+                location.reload(); // Reload page to show new review
+            });
+        }
+    </script>
+
+</body>
+</html>
