@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bara Lighter Hoodie</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .clothing-item {
+            background-color: rgba(0, 0, 0, 0.777);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 40%;
+            margin: 30px auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .image-slider {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-slider img {
+            width: 70%;
+            border-radius: 5px;
+        }
+
+        .image-slider button {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+    border-radius: 100px;
+}
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .image-slider button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .image-slider button:disabled {
+            background: rgba(0, 0, 0, 0.2);
+            cursor: not-allowed;
+        }
+
+        select, input {
+            padding: 8px;
+            margin: 5px;
+            width: 80%;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background-color: rgb(255, 208, 0);
+            font-size: medium;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: rgb(255, 180, 0);
+        }
+        @media (max-width: 600px) {
+    .image-slider button {
+        padding: 15px;  /* Smaller padding */
+        font-size: 14px; /* Smaller icon */
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <button id="open-sidebar-button" onclick="openSidebar()" aria-label="open sidebar" aria-expanded="false" aria-controls="navbar">
+      <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9"><path d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z"/></svg>
+    </button>
+  
+    <nav id="navbar">
+      <ul>
+        <li>
+          <button id="close-sidebar-button" onclick="closeSidebar()" aria-label="close sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9"><path d="m480-444.62-209.69 209.7q-7.23 7.23-17.5 7.42-10.27.19-17.89-7.42-7.61-7.62-7.61-17.7 0-10.07 7.61-17.69L444.62-480l-209.7-209.69q-7.23-7.23-7.42-17.5-.19-10.27 7.42-17.89 7.62-7.61 17.7-7.61 10.07 0 17.69 7.61L480-515.38l209.69-209.7q7.23-7.23 17.5-7.42 10.27-.19 17.89 7.42 7.61 7.62 7.61 17.7 0 10.07-7.61 17.69L515.38-480l209.7 209.69q7.23 7.23 7.42 17.5.19 10.27-7.42 17.89-7.62 7.61-17.7 7.61-10.07 0-17.69-7.61L480-444.62Z"/></svg>
+          </button>
+        </li>
+        <li class="home-li"><a class="active-link" aria-current="page" href="BaraLighter.html">Bara Lighter Hoodie</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="ContactUs.html">Contact Us</a></li>
+        <li><a href="HowToBuy.html">How to buy</a></li>
+      </ul>
+    </nav>
+    
+    <div id="overlay" onclick="closeSidebar()" aria-hidden="true"></div>
+
+    <div class="clothing-item">
+        <div class="image-slider">
+            <button id="prevBtn" class="prev" onclick="changeImage(-1)" disabled>&#10094;</button>
+            <img id="product-image" src="AanstekerTrui.png" alt="T-Shirt">
+            <button id="nextBtn" class="next" onclick="changeImage(1)">&#10095;</button>
+        </div>
+
+        <p><strong>Bara Ligter Hoodie   </strong></p>
+
+        <label for="size-7">Size:</label>
+        <select id="size-7">
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+
+        <br>
+
+        <label for="color-7">Color:</label>
+        <select id="color-7">
+            <option value="Light Blue">Light Blue</option>
+        </select>
+
+        <br><br>
+
+        <label for="customer-name">Your Name:</label>
+        <input type="text" id="customer-name" placeholder="Enter your name" required>
+        <br>
+
+        <label for="customer-email">Your Email:</label>
+        <input type="email" id="customer-email" placeholder="Enter your email" required>
+        <br>
+
+        <label for="customer-address">Your Address:</label>
+        <input type="text" id="customer-address" placeholder="Enter your address" required>
+        <br><br>
+
+        <p><strong>Price: €25</strong></p>
+
+        <button onclick="sendEmail()"><b>Order Now</b></button>
+    </div>
+
+    <script>
+        let images = ["AanstekerTrui.png"]; // Add your image paths
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            
+            // Update image
+            document.getElementById("product-image").src = images[currentIndex];
+
+            // Disable buttons when at first or last image
+            document.getElementById("prevBtn").disabled = currentIndex === 0;
+            document.getElementById("nextBtn").disabled = currentIndex === images.length - 1;
+        }
+
+        function sendEmail() {
+            // Get user input values
+            const size = document.getElementById("size-7").value;
+            const color = document.getElementById("color-7").value;
+            const name = document.getElementById("customer-name").value;
+            const email = document.getElementById("customer-email").value;
+            const address = document.getElementById("customer-address").value;
+
+            // Check if required fields are filled
+            if (!name || !email || !address) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const subject = encodeURIComponent("New Clothing Order");
+            const body = encodeURIComponent(
+                `New order received:\n\n` +
+                `Clothing Item: Bara Lighter Hoodie \n` +
+                `Size: ${size}\n` +
+                `Color: ${color}\n\n` +
+                `Customer Details:\n` +
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                `Address: ${address}\n\n` +
+                `You will receive an email with payment and delivery information.\n` +
+                `Please send this email to confirm your order.`
+            );
+
+            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com&su=${subject}&body=${body}`;
+    const mailtoLink = `mailto:rafcruycke3@gmail.com?subject=${subject}&body=${body}`;
+
+    if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+        window.location.href = mailtoLink; // iOS devices use Mail app
+    } else {
+        window.open(gmailLink, "_blank"); // Opens Gmail by default
+    }
+    setTimeout(function() {
+        window.location.href = "Thank you.html"; // Replace with the actual path to your ThankYou page
+    }, 2000);
+
+        }
+    </script>
+
+</body>
+</html>
