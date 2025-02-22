@@ -35,65 +35,85 @@
         }
 
         .image-slider img {
-            width: 70%;
-            border-radius: 5px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
         }
 
         .image-slider button {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 25px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: 0.3s;
-    border-radius: 100px;
-}
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 35px;
+            cursor: pointer;
+            font-size: 28px;
+            transition: 0.3s;
+            border-radius: 50px;
+        }
 
         .prev {
-            left: 10px;
+            left: 15px;
         }
 
         .next {
-            right: 10px;
+            right: 15px;
         }
 
         .image-slider button:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .image-slider button:disabled {
-            background: rgba(0, 0, 0, 0.2);
-            cursor: not-allowed;
+            background: rgba(0, 0, 0, 0.9);
         }
 
         select, input {
-            padding: 8px;
-            margin: 5px;
-            width: 80%;
-            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            width: 90%;
+            border-radius: 10px;
             border: none;
+            font-size: 20px;
         }
 
         button {
             background-color: rgb(255, 208, 0);
-            font-size: medium;
-            padding: 10px;
+            font-size: 24px;
+            padding: 18px;
             border: none;
             cursor: pointer;
-            margin-top: 10px;
-            border-radius: 5px;
+            margin-top: 20px;
+            border-radius: 10px;
+            font-weight: bold;
         }
 
         button:hover {
             background-color: rgb(255, 180, 0);
         }
-        @media (max-width: 600px) {
-    .image-slider button {
-        padding: 15px;  /* Smaller padding */
-        font-size: 14px; /* Smaller icon */
-    }
+
+        /* Mobile Optimization */
+        @media (max-width: 800px) {
+            .clothing-item {
+                width: 90%;
+                padding: 30px;
+            }
+
+            .image-slider img {
+                width: 100%;
+            }
+
+            .image-slider button {
+                padding: 25px;
+                font-size: 26px;
+            }
+
+            select, input {
+                width: 100%;
+                font-size: 22px;
+                padding: 18px;
+            }
+
+            button {
+                font-size: 26px;
+                padding: 20px;
+            }
 }
 
     </style>
