@@ -60,6 +60,8 @@ nav a.accent-link{
 }
 #open-sidebar-button{
   position: fixed;
+  left: 85%;
+  top: 1.5%;
   display: none;
   background: none;
   border: none;
