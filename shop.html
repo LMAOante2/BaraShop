@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/ecbdcf2a50.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
         <!-- Link to the favicon -->
@@ -238,23 +239,7 @@ h2 {
     .button1 {
         width: 282.5px;
         height: 297.45px;
-    }
-
-    .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            background: #f3f3f3;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        .marquee-container marquee img {
-            width: 300px; /* Adjust as needed */
-            height: 200px;
-            border-radius: 10px;
-        }
-        
+    }      
 
 }
 
@@ -268,8 +253,173 @@ h2 {
 
 
     </style>
+
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: white;
+}
+footer{
+  background: rgba(0, 25, 247, 0.562);
+  padding-top: 50px;
+  margin-top: 0;
+}
+.container{
+  width: 1140px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+.footer-content{
+  width: 33.3%;
+}
+h3{
+  font-size: 28px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.footer-content p{
+  width: 190px;
+  margin: auto;
+  padding: 7px;
+}
+.footer-content ul{
+  text-align: center;
+}
+.list{
+  padding: 0;
+}
+.list li{
+  width: auto;
+  text-align: center;
+  list-style-type: none;
+  padding: 7px;
+  position: relative;
+}
+.list li::before{
+  content: '';
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 100%;
+  width: 0;
+  height: 2px;
+  background: #f18930;
+  transition-duration: .5s;
+}
+.list li:hover::before{
+  width: 70px;
+}
+.social-icons{
+  text-align: center;
+  padding: 0;
+}
+.social-icons li{
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+}
+.social-icons i{
+  color: white;
+  font-size: 15px;
+}
+a{
+  text-decoration: none;
+}
+a:hover{
+  color: #f18930;
+}
+.social-icons i:hover{
+  color: #f18930;
+}
+.bottom-bar{
+  background: #ff7700;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 0;
+}
+.bottom-bar p{
+  color: #343434;
+  margin: 0;
+  font-size: 16px;
+  padding: 7px;
+}
+.listmail{
+  padding: 0;
+}
+.listmail li{
+  width: auto;
+  text-align: center;
+  list-style-type: none;
+  padding: 1px;
+  position: relative;
+}
+.listmail li::before{
+  content: '';
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 60%;
+  top: 100%;
+  width: 0;
+  height: 2px;
+  background: #f18930;
+  transition-duration: .5s;
+}
+.listmail li:hover::before{
+  width: 180px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    flex-direction: column;
+  }
+  .footer-content {
+    width: 100%;
+    padding: 20px 0;
+  }
+  h3 {
+    font-size: 24px;
+  }
+  .footer-content p {
+    width: 100%;
+    font-size: 14px;
+  }
+  .list li, .listmail li {
+    padding: 5px;
+  }
+  .social-icons i {
+    font-size: 20px;
+  }
+  .bottom-bar p {
+    font-size: 14px;
+  }
+  footer {
+    padding-top: 30px;
+  }
+  .listmail li::before{
+  content: '';
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 55%;
+  top: 100%;
+  width: 0;
+  height: 2px;
+  background: #f18930;
+  transition-duration: .5s;
+}
+.listmail li:hover::before{
+  width: 180px;
+}
+}
+  </style>
 </head>
 <body>
+
+    
 
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -531,46 +681,38 @@ h2 {
 
 
 
-                    
-                                
-                                  
-
-
-       
-       
-       
-       <div style="
-    background: linear-gradient( rgba(0, 47, 255, 0.836), rgba(0, 0, 255, 0.863), rgba(255, 0, 0, 0.863), rgba(255, 30, 0, 0.849)); 
-    color: white; 
-    padding: 20px; 
-    text-align: center;
-    align-items: center; 
-    position: static;; 
-    bottom: 5%; 
-    width: 100%;">
-    <body>
-        <div>
-            <h3> Our Socials</h3>
-        </div>
-        <div style="display: flex; justify-content: center; gap: 10px;">
-            <a href="https://www.instagram.com/bara.photografie/" target="_blank"><img src="instagram.png" alt="Instagram" class="Instagram"></a>
-            <a href="https://www.tiktok.com/@officialbara.be?lang=nl-NL" target="_blank"><img src="TikTok.png" alt="Instagram" class="Instagram"></a>
-        </div>
-        </body>
-
-        <div>
-            <h3> About us</h3>
-            <a> We are a leading brand in high-quality fashion. Our products are designed with care, focusing on comfort, style, and affordability. </a>
-            <h3> Contact Us </h3>
-            <a> For any inquiries, please reach out to us via email: rafcruycke3@gmail.com. </a>
-            <div>
-                <h3>How To Buy</h3>
-                click on <a style="color: white;" href="HowToBuy.html">How to Buy</a>
-                
-            </div>
-            <img src="logobottom.png" alt="Logo" class="logobottom">
-        </div>
 </div>
+<footer>
+    <div class="container">
+      <div class="footer-content">
+        <h3>Contact Us</h3>
+        <ul class="listmail">
+          <li><p>Email:<a hreflang="mailto:rafcruycke3@gmail.com?subject=${subject}&body=${body}" href="https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com">rafcruycke3@gmail.com</a></p></li>
+        </ul>    
+      </div>
+      <div class="footer-content">
+                <h3>Quick Links</h3>
+      <ul class="list">
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="ContactUs.html">Contact Us</a></li>
+        <li><a href="HowToBuy.html">How To Buy</a></li>
+      </ul>
+      </div>
+      <div class="footer-content">
+        <h3>Follow Us</h3>
+        <ul class="social-icons">
+         <li><a href="https://www.tiktok.com/@officialbara.be?lang=nl-NL"><i class="fab fa-tiktok"></i></a></li>
+         <li><a href="https://www.instagram.com/bara.photografie/"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+        </div>
+    </div>
+    </div>
+    <div class="bottom-bar">
+      <p>&copy; 2025 Bara</p>
+    </div>
+  </footer>
+
 
 
 
