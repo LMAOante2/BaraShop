@@ -3,145 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You</title>
+    <meta name="description" content="Bara Shop offers the best deals on fashion, and more!">
+    <meta name="keywords" content="Bara Shop, online store, best prices, fashion, electronics">
+    <meta name="author" content="Bara Shop">
+    <meta name="google-site-verification" content="nqZV-PQdPVBpzSF-VQ6GKROt6wbZCGzb7PKh__DVHzc" />
+    <title>BARA Clothing Shop</title>
     <style>
-        /* Make the background cover the entire viewport */
-        body, html {
-            height: 100%;
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
+            padding: 0;
             overflow: hidden;
-            background-color: #000; /* Dark background for better visibility */
+            height: 100vh;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Style for the fireworks canvas */
-        #fireworksCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Main Content Styles */
+        #main-content {
+            display: none;
+            opacity: 0;
+            padding: 20px;
+            transition: opacity 1s ease-in-out;
+            text-align: center;
+            background: linear-gradient(45deg, #05c5ff, #0011fd); /* Example background */
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Disable canvas interaction */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #main-content.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .go-to-shop-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            animation: bounceIn 1s ease-in-out infinite alternate;
+        }
+
+        .go-to-shop-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Bounce effect for the button */
+        @keyframes bounceIn {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div style="color: rgb(255, 255, 255); margin-left: 45%; margin-top: 27%; font-size: xx-large;">
-        <h3> Thank You </h3>
+    <!-- Main Content (will be shown after page load) -->
+    <div id="main-content">
+        <h1>Go Back To The Shop</h1>
+        <button class="go-to-shop-btn" onclick="goToShop()">Go to Shop</button>
     </div>
-    <div>
-        <a style="color: white; background: rgb(0, 0, 0); margin-left: 46.5%; font-size: larger;" href="shop.html">Go Back To Shop</a>
-    </div>
-
-    <!-- Canvas element for fireworks animation -->
-    <canvas id="fireworksCanvas"></canvas>
 
     <script>
-        // Get the canvas element and set up the context
-        const canvas = document.getElementById('fireworksCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Function to show main content with smooth animation when the page loads
+        window.onload = function() {
+            // Display main content with smooth fade-in animation
+            setTimeout(() => {
+                document.getElementById('main-content').classList.add('show');
+            }, 500); // Wait for 0.5 seconds before showing content
+        };
 
-        // Create a random color generator for fireworks
-        function randomColor() {
-            const colors = ['#ff0044', '#ffcc00', '#00ff00', '#00ccff', '#9900cc', '#ff6699'];
-            return colors[Math.floor(Math.random() * colors.length)];
+        // Function to transition to the shop page when the button is clicked
+        function goToShop() {
+            // Optionally, you can add some animation here before redirecting.
+            setTimeout(() => {
+                window.location.href = "shop.html"; // Redirect to the actual shop page
+            }, 500); // Wait for animation (if any) before redirect
         }
-
-        // Firework particle class
-        class Particle {
-            constructor(x, y, color, radius, speed, direction) {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-                this.radius = radius;
-                this.speed = speed;
-                this.direction = direction;
-                this.life = 100;
-            }
-
-            // Update particle position and properties
-            update() {
-                this.x += this.speed * Math.cos(this.direction);
-                this.y += this.speed * Math.sin(this.direction);
-                this.life -= 2;
-            }
-
-            // Draw the particle on canvas
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-        }
-
-        // Firework class for launching fireworks
-        class Firework {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.particles = [];
-                this.launch();
-            }
-
-            // Launch the fireworks by generating particles
-            launch() {
-                const numParticles = 100;
-                const angleIncrement = (Math.PI * 2) / numParticles;
-                const speed = Math.random() * 5 + 2;
-
-                for (let i = 0; i < numParticles; i++) {
-                    const angle = i * angleIncrement;
-                    const color = randomColor();
-                    const radius = Math.random() * 3 + 1;
-                    this.particles.push(new Particle(this.x, this.y, color, radius, speed, angle));
-                }
-            }
-
-            // Update and draw the fireworks particles
-            update() {
-                for (let i = 0; i < this.particles.length; i++) {
-                    const p = this.particles[i];
-                    p.update();
-                    p.draw();
-                    if (p.life <= 0) {
-                        this.particles.splice(i, 1);
-                        i--;
-                    }
-                }
-            }
-        }
-
-        // Array to hold the fireworks
-        const fireworks = [];
-
-        // Generate new fireworks at random positions
-        function generateFireworks() {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            fireworks.push(new Firework(x, y));
-        }
-
-        // Animation loop to update and draw the fireworks
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < fireworks.length; i++) {
-                fireworks[i].update();
-            }
-
-            // Generate new fireworks occasionally
-            if (Math.random() < 0.05) {
-                generateFireworks();
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        // Start the animation
-        animate();
     </script>
 
 </body>
