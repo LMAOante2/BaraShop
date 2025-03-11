@@ -1,138 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Reviews</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        .review-container {
-            width: 50%;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .stars-container {
-            font-size: 30px;
-            cursor: pointer;
-        }
-        .star {
-            color: gray;
-            transition: color 0.3s ease-in-out;
-        }
-        .star.selected {
-            color: gold;
-        }
-        .reviews-list {
-            margin-top: 20px;
-            text-align: left;
-        }
-        .review {
-            background: #fff;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .stars {
-            font-size: 20px;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Review</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .form-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .stars {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .stars span {
+      font-size: 30px;
+      cursor: pointer;
+      color: #ddd; /* Default gray color */
+    }
+    .stars span.selected {
+      color: gold;
+    }
+    .form-container input, .form-container textarea, .form-container select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .reviews-container {
+      margin-top: 40px;
+    }
+    .review {
+      background-color: #fff;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Customer Reviews</h1>
-    
-    <div class="review-container">
-        <h2>Leave a Review</h2>
-        <div class="stars-container">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <textarea id="reviewText" placeholder="Write your review here..."></textarea><br>
-        <button onclick="submitReview()">Submit</button>
+  <h2>Leave a Review</h2>
 
-        <h2>Recent Reviews</h2>
-        <div id="reviewsList" class="reviews-list">
-            <?php include 'fetch_reviews.php'; ?>
-        </div>
-    </div>
+  <!-- Review Form -->
+  <div class="form-container">
+    <form id="reviewForm">
+      <select id="productSelect" required>
+        <option value="">Select a product</option>
+        <option value="Product 1">Product 1</option>
+        <option value="Product 2">Product 2</option>
+        <option value="Product 3">Product 3</option>
+      </select><br>
+      
+      <input type="text" id="name" placeholder="Your name" required><br>
+      <textarea id="review" placeholder="Your review" required></textarea><br>
 
-    <script>
-        let selectedRating = 0;
+      <div class="stars" id="starRating">
+        <span data-value="1">&#9733;</span>
+        <span data-value="2">&#9733;</span>
+        <span data-value="3">&#9733;</span>
+        <span data-value="4">&#9733;</span>
+        <span data-value="5">&#9733;</span>
+      </div>
 
-        document.querySelectorAll(".star").forEach(star => {
-            star.addEventListener("click", function () {
-                selectedRating = parseFloat(this.getAttribute("data-value"));
-                highlightStars(selectedRating);
-            });
+      <button type="submit">Submit Review</button>
+    </form>
+  </div>
 
-            star.addEventListener("mouseover", function () {
-                highlightStars(parseFloat(this.getAttribute("data-value")));
-            });
+  <div class="reviews-container" id="reviewsList">
+    <!-- Reviews will appear here -->
+  </div>
 
-            star.addEventListener("mouseleave", function () {
-                highlightStars(selectedRating);
-            });
-        });
-
-        function highlightStars(rating) {
-            document.querySelectorAll(".star").forEach(star => {
-                let value = parseFloat(star.getAttribute("data-value"));
-                star.classList.toggle("selected", value <= rating);
-            });
-        }
-
-        function submitReview() {
-            let reviewText = document.getElementById("reviewText").value;
-            if (reviewText.trim() === "" || selectedRating === 0) {
-                alert("Please enter a review and select a rating.");
-                return;
-            }
-
-            let formData = new FormData();
-            formData.append("review", reviewText);
-            formData.append("rating", selectedRating);
-
-            fetch("save_review.php", {
-                method: "POST",
-                body: formData
-            }).then(() => {
-                location.reload(); // Reload page to show new review
-            });
-        }
-    </script>
-
+  <script src="reviews.js"></script>
 </body>
 </html>

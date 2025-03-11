@@ -21,19 +21,24 @@
     <style>
         
         
-
 body {
-        background-image: url('Barabg.png');
-        background-size: cover; /* Adjusts image size */
-        background-position: center; /* Centers the image */
-        background-position: fixed;
-        background-repeat: no-repeat; /* Prevents repetition */
+    background-image: url('Barabg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
     overflow-y: auto;
     height: 100%;
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        background-image: url('Barabg.png');
+    }
 }
 
 
@@ -327,6 +332,27 @@ h3{
   color: white;
   font-size: 15px;
 }
+.social-icons li{
+  width: auto;
+  text-align: center;
+  list-style-type: none;
+  padding: 1px;
+  position: relative;
+}
+.social-icons li::before{
+  content: '';
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 100%;
+  width: 0;
+  height: 2px;
+  background: #f18930;
+  transition-duration: .5s;
+}
+.social-icons li:hover::before{
+  width: 10px;
+}
 a{
   text-decoration: none;
 }
@@ -338,7 +364,7 @@ a:hover{
   color: #f18930;
 }
 .bottom-bar{
-  background: linear-gradient(rgba(255, 0, 0, 0.89), rgba(0, 0, 255, 0.938));
+  background: linear-gradient(rgba(255, 0, 0, 0.911), rgba(0, 0, 255, 0.938 ));
   text-align: center;
   padding: 10px 0;
   margin-top: 0;
