@@ -21,20 +21,46 @@
     <style>
         
         
+        html, body {
+    height: 100%; /* Ensure the body and html take up the full height */
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-image: url('Barabg.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-size: cover; /* Ensures the background covers the entire screen */
+    background-position: center center; /* Keeps the image centered */
+    background-attachment: fixed; /* Fixed background for desktop (optional for mobile) */
     background-repeat: no-repeat;
     font-family: Arial, sans-serif;
     text-align: center;
-    margin: 0;
-    padding: 0;
     overflow-y: auto;
-    height: 100%;
 }
 
+/* For mobile devices */
+@media screen and (max-width: 767px) {
+    body {
+        background-attachment: fixed; /* Disable fixed background for mobile */
+        background-size: cover; /* Ensures the image fully covers the screen */
+        background-position: center center; /* Centers the image */
+        min-height: 100vh; /* Ensures the background covers the full height of the viewport */
+    }
+}
+
+/* For tablets and smaller screens */
+@media screen and (max-width: 1024px) {
+    body {
+        background-size: cover; /* Ensures the background image fully covers the screen */
+    }
+}
+
+/* For larger screens (PC or larger tablets) */
+@media screen and (min-width: 1025px) {
+    body {
+        background-size: cover; /* Ensures the image fully covers the screen */
+    }
+}
 
 
 .container {
