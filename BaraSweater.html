@@ -114,8 +114,7 @@
                 font-size: 26px;
                 padding: 20px;
             }
-}
-
+        }
     </style>
 </head>
 <body>
@@ -123,7 +122,7 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <button id="open-sidebar-button" onclick="openSidebar()" aria-label="open sidebar" aria-expanded="false" aria-controls="navbar">
-      <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9"><path d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9"><path d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.13-17.9 7.13H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z"/></svg>
     </button>
   
     <nav id="navbar">
@@ -165,7 +164,7 @@
 
         <label for="color-10">Color:</label>
         <select id="color-10">
-            <option value="Grey">Grey</option>
+            <option value="Grey/Grijs">Grey</option>
             <option value="Black">Black</option>
         </select>
 
@@ -203,6 +202,31 @@
             document.getElementById("nextBtn").disabled = currentIndex === images.length - 1;
         }
 
+        // Function to handle swipe events
+        function handleSwipe(event) {
+            const touchStartX = event.changedTouches[0].pageX;
+
+            const touchEndHandler = function (event) {
+                const touchEndX = event.changedTouches[0].pageX;
+                if (touchStartX - touchEndX > 50) { 
+                    // Swipe left (next image)
+                    changeImage(1);
+                } else if (touchEndX - touchStartX > 50) {
+                    // Swipe right (previous image)
+                    changeImage(-1);
+                }
+                document.removeEventListener("touchend", touchEndHandler);
+            };
+            
+            document.addEventListener("touchend", touchEndHandler);
+        }
+
+        // Add swipe functionality for small screens
+        if (window.innerWidth <= 800) {
+            const imageSlider = document.querySelector(".image-slider");
+            imageSlider.addEventListener("touchstart", handleSwipe);
+        }
+
         function sendEmail() {
             // Get user input values
             const size = document.getElementById("size-10").value;
@@ -232,17 +256,16 @@
             );
 
             const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com&su=${subject}&body=${body}`;
-    const mailtoLink = `mailto:rafcruycke3@gmail.com?subject=${subject}&body=${body}`;
+            const mailtoLink = `mailto:rafcruycke3@gmail.com?subject=${subject}&body=${body}`;
 
-    if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
-        window.location.href = mailtoLink; // iOS devices use Mail app
-    } else {
-        window.open(gmailLink, "_blank"); // Opens Gmail by default
-    }
-    setTimeout(function() {
-        window.location.href = "Thank you.html"; // Replace with the actual path to your ThankYou page
-    }, 2000);
-
+            if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+                window.location.href = mailtoLink; // iOS devices use Mail app
+            } else {
+                window.open(gmailLink, "_blank"); // Opens Gmail by default
+            }
+            setTimeout(function() {
+                window.location.href = "Thank you.html"; // Replace with the actual path to your ThankYou page
+            }, 2000);
         }
     </script>
 
