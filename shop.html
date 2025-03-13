@@ -42,8 +42,13 @@ body {
 @media screen and (max-height: 450px) {
     body {
       background-image: url(Barabgpone.png);
-      background-size: 100px;
-      background-attachment: fixed;
+      background-size: cover; /* Ensures the background covers the entire screen */
+    background-position: center center; /* Keeps the image centered */
+    background-attachment: fixed; /* Fixed background for desktop (optional for mobile) */
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow-y: auto;
     }
 }
 
