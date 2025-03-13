@@ -41,10 +41,7 @@ body {
 /* For mobile devices */
 @media screen and (max-height: 450px) {
     body {
-        background-attachment: fixed; /* Disable fixed background for mobile */
-        background-size: auto; /* Ensures the image fully covers the screen */
-        background-position: center center; /* Centers the image */
-        min-height: 100vh; /* Ensures the background covers the full height of the viewport */
+      background-image: url(Barabgpone.png);
     }
 }
 
@@ -67,6 +64,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    position: center;
 }
 
 /* Grid container for products */
@@ -504,15 +502,19 @@ a:hover{
     <div id="overlay" onclick="closeSidebar()" aria-hidden="true"></div>
 
 
-    <marquee behavior="sliding" direction="left" style="font-size: large; color: black; ">🔥Shop Now!🔥</marquee>
+    <marquee behavior="sliding" direction="left" style="font-size: 40px; color: rgb(255, 255, 255); -webkit-text-stroke-color: black; -webkit-text-stroke-width: 2px;">🔥Shop Now!🔥</marquee>
       
 
 
-    <div class="container">
+    <div style="    max-width: 1200px; 
+    margin: auto;
+    position: center;
+    margin-top: 0;
+    padding-bottom: 1 px;">
         <div>
                   <!-- Logo at the Top Center -->
         <img src="logobottom.png" alt="Logo" class="logo">  
-        </div>
+    </div>
 
         
 
