@@ -422,7 +422,7 @@ a:hover{
   content: '';
   position: absolute;
   transform: translate(-50%,-50%);
-  left: 52%;
+  left: 50%;
   top: 100%;
   width: 0;
   height: 2px;
@@ -476,6 +476,22 @@ a:hover{
  .listmail li:hover::before{
   width: 180px;
  }
+
+ .button{
+      border: none;
+      background: none;
+      background-color: none;
+      color: #0091f1;
+      text-decoration: underline;
+      font-size: large;
+      cursor: pointer;
+      }
+
+        .button :hover{
+          text-decoration: rgb(145, 255, 0);
+          background: none;
+          color: blue;
+        }
 
 }
   </style>
@@ -717,7 +733,12 @@ a:hover{
       <div class="footer-content">
         <h3>Contact Us</h3>
         <ul class="listmail">
-          <li><p>Email:<a href="https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com" target="_blank"><button style="border: none; background: none; color: #0091f1; text-decoration: underline; font-size: large ; cursor: pointer; font: bold; text-decoration-thickness: 1px;"> <button style="border: none; background: none; font-size: large ; cursor: pointer; margin-bottom: -15px;">rafcruycke3@gmail.com</a></p></li>
+          <li><p>Email:<button style="      border: none;
+            background: none;
+            background-color: none;
+            text-decoration: underline;
+            font-size: medium;
+            cursor: pointer;" onclick="handleEmailClick()">rafcruycke3@gmail.com</button></p></li>
         </ul>    
       </div>
       <div class="footer-content">
@@ -800,6 +821,18 @@ a:hover{
     }, 2000); // 2000 milliseconds = 2 seconds delay
 
 }
+
+function handleEmailClick() {
+            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+            if (isMobile) {
+              // 📱 Mobile: use mailto to open default mail app (like Gmail app, Apple Mail, etc.)
+              window.location.href = "mailto:rafcruycke3@gmail.com";
+            } else {
+              // 💻 Desktop: open Gmail compose in new tab
+              window.open("https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com", "_blank");
+            }
+          }
 
         
     </script>
