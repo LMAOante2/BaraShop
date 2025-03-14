@@ -14,11 +14,15 @@
             margin: 50px;
         }
         .button{
-          background: none;
-          background-color: none;
-          size: auto;
-          color: white;
-        }
+      border: none;
+      background: none;
+      background-color: none;
+      color: #0091f1;
+      text-decoration: underline;
+      font-size: large;
+      cursor: pointer;
+      }
+
         .button :hover{
           text-decoration: rgb(145, 255, 0);
           background: none;
@@ -59,9 +63,24 @@
         bottom: 10%; 
         width: 100%;">
                     <h1> Contact Us </h1>
-        <h3> Send an email to <a class="button" href="https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com" target="_blank"><button style="border: none; background: none; color: #0091f1; text-decoration: underline; font-size: large ; cursor: pointer; font: bold; text-decoration-thickness: 1px;"> <button class="button" style="border: none; background: none; text-decoration: underline; font-size: large ; cursor: pointer; font: bold; text-decoration-thickness: 2px;" class="button" > <b>rafcruycke3@gmail.com</b> </button> </button></a></h3>
+        <h3> Send an email to <button class="button" onclick="handleEmailClick()">rafcruycke3@gmail.com</button></h3>
         </div>
 
+        <script>
+          function handleEmailClick() {
+            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+            if (isMobile) {
+              // 📱 Mobile: use mailto to open default mail app (like Gmail app, Apple Mail, etc.)
+              window.location.href = "mailto:rafcruycke3@gmail.com";
+            } else {
+              // 💻 Desktop: open Gmail compose in new tab
+              window.open("https://mail.google.com/mail/?view=cm&fs=1&to=rafcruycke3@gmail.com", "_blank");
+            }
+          }
+        </script>
+
     </body>
+    
 
 </html>
