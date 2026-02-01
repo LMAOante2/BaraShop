@@ -16,6 +16,7 @@
 <body>
 <h1>IoT Dashboard</h1>
 
+<!-- Authentication -->
 <div id="auth">
   <h2>Sign Up / Login</h2>
   <input type="email" id="email" placeholder="Email"><br>
@@ -24,24 +25,35 @@
   <button onclick="login()">Login</button>
 </div>
 
+<!-- Dashboard -->
 <div id="dashboard" style="display:none;">
   <h2>Welcome, <span id="userEmail"></span></h2>
 
+  <!-- Add Device -->
   <h3>Add Device</h3>
-  <input type="text" id="deviceId" placeholder="Device ID (MAC)">
+  <input type="text" id="deviceId" placeholder="Device ID (MAC or custom)">
   <button onclick="addDevice()">Add Device</button>
 
+  <!-- Provisioning Token -->
+  <h3>Provision Device</h3>
+  <p>Generate a provisioning token for this device. Copy it and use it on your ESP32.</p>
+  <button onclick="generateToken()">Generate Provisioning Token</button>
+  <input type="text" id="provisionToken" readonly placeholder="Token will appear here">
+  <button onclick="useToken()">Save Token</button>
+
+  <!-- Device List -->
   <h3>Your Devices</h3>
   <div id="devices"></div>
 </div>
 
 <script>
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyDa-Gn5AtvCYwzC7GvArnDUrc6HQfdT-U4",
   authDomain: "login-form-19883.firebaseapp.com",
   databaseURL: "https://login-form-19883-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "login-form-19883",
-  storageBucket: "login-form-19883.appspot.com",
+  storageBucket: "login-form-19883.firebasestorage.app",
   messagingSenderId: "469023290458",
   appId: "1:469023290458:web:d0d24d8e80ae5c557b5463"
 };
@@ -49,7 +61,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-// Sign up / Login
+// Authentication
 function signup() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
@@ -65,6 +77,7 @@ function login() {
       .catch(err => alert(err.message));
 }
 
+// Show Dashboard & Load Devices
 function showDashboard(user) {
   document.getElementById('auth').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
@@ -78,20 +91,16 @@ function showDashboard(user) {
       const device = child.val();
       const deviceDiv = document.createElement('div');
       deviceDiv.className = 'device';
-      deviceDiv.innerHTML = `
-        <b>${device.id}</b><br>
-        Provisioning Token: ${device.token || 'Not generated'}<br>
-        Wi-Fi: ${device.wifi?.ssid || 'Not set'}<br>
-        <button onclick="generateToken('${child.key}')">Generate Provisioning Token</button>
-        <button onclick="configureWifi('${child.key}')">Set Wi-Fi</button>
-        <button onclick="toggleLED('${child.key}')">Toggle LED</button>
-      `;
+      deviceDiv.innerHTML = `<b>${device.id}</b><br>
+                             Wi-Fi: ${device.wifiSSID || 'Not set'}<br>
+                             <button onclick="configureWifi('${child.key}')">Configure Wi-Fi</button>
+                             <button onclick="toggleLED('${child.key}')">Toggle LED</button>`;
       div.appendChild(deviceDiv);
     });
   });
 }
 
-// Add device
+// Add Device
 function addDevice() {
   const deviceId = document.getElementById('deviceId').value;
   const user = auth.currentUser;
@@ -101,16 +110,7 @@ function addDevice() {
   document.getElementById('deviceId').value = '';
 }
 
-// Generate provisioning token
-function generateToken(deviceKey) {
-  const token = Math.random().toString(36).substring(2, 12); // 10-char random
-  const user = auth.currentUser;
-  if (!user) return;
-  db.ref(`users/${user.uid}/devices/${deviceKey}/token`).set(token);
-  alert("Provisioning token: " + token);
-}
-
-// Set Wi-Fi
+// Configure Wi-Fi
 function configureWifi(deviceKey) {
   const ssid = prompt("Enter Wi-Fi SSID:");
   const pass = prompt("Enter Wi-Fi Password:");
@@ -129,6 +129,24 @@ function toggleLED(deviceKey) {
     const current = snapshot.val() || 0;
     ledRef.set(current === 1 ? 0 : 1);
   });
+}
+
+// Generate Provisioning Token
+function generateToken() {
+  const token = Math.random().toString(36).substring(2, 12); // 10-char token
+  document.getElementById('provisionToken').value = token;
+}
+
+// Save Token in Firebase
+function useToken() {
+  const token = document.getElementById('provisionToken').value;
+  const user = auth.currentUser;
+  if (!token || !user) return;
+  db.ref('provisioning_tokens/' + token).set({
+    uid: user.uid,
+    createdAt: Date.now()
+  });
+  alert("Provisioning token saved! Use this token on your ESP32.");
 }
 </script>
 </body>
