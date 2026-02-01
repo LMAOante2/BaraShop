@@ -1,103 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bara Shop offers the best deals on fashion, and more!">
-    <meta name="keywords" content="Bara Shop, online store, best prices, fashion, electronics">
-    <meta name="author" content="Bara Shop">
-    <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="nqZV-PQdPVBpzSF-VQ6GKROt6wbZCGzb7PKh__DVHzc" />
-    <title>BARA Clothing Shop</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100vh;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Main Content Styles */
-        #main-content {
-            display: none;
-            opacity: 0;
-            padding: 20px;
-            transition: opacity 1s ease-in-out;
-            text-align: center;
-            background: linear-gradient(45deg, #05c5ff, #0011fd); /* Example background */
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        #main-content.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .go-to-shop-btn {
-            background-color: #28a745;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            animation: bounceIn 1s ease-in-out infinite alternate;
-        }
-
-        .go-to-shop-btn:hover {
-            background-color: #218838;
-        }
-
-        /* Bounce effect for the button */
-        @keyframes bounceIn {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoT Dashboard</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+  body { font-family: Arial; margin: 20px; }
+  input, button { margin: 5px; padding: 8px; }
+  .device { border: 1px solid #ccc; padding: 10px; margin-bottom: 5px; }
+</style>
 </head>
 <body>
+<h1>IoT Dashboard</h1>
 
-    <!-- Main Content (will be shown after page load) -->
-    <div id="main-content">
-        <h1>Welcome Back to bara Shop!</h1>
-        <button class="go-to-shop-btn" onclick="goToShop()">Go to Shop</button>
-    </div>
+<!-- Authentication -->
+<div id="auth">
+  <h2>Sign Up / Login</h2>
+  <input type="email" id="email" placeholder="Email"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+</div>
 
-    <script>
-        // Function to show main content with smooth animation when the page loads
-        window.onload = function() {
-            // Display main content with smooth fade-in animation
-            setTimeout(() => {
-                document.getElementById('main-content').classList.add('show');
-            }, 500); // Wait for 0.5 seconds before showing content
-        };
+<!-- Dashboard -->
+<div id="dashboard" style="display:none;">
+  <h2>Welcome, <span id="userEmail"></span></h2>
 
-        // Function to transition to the shop page when the button is clicked
-        function goToShop() {
-            // Optionally, you can add some animation here before redirecting.
-            setTimeout(() => {
-                window.location.href = "shop.html"; // Redirect to the actual shop page
-            }, 500); // Wait for animation (if any) before redirect
-        }
-    </script>
+  <!-- Add Device -->
+  <h3>Add Device</h3>
+  <input type="text" id="deviceId" placeholder="Device ID (MAC or custom)">
+  <button onclick="addDevice()">Add Device</button>
 
+  <!-- Provisioning Token -->
+  <h3>Provision Device</h3>
+  <p>Generate a provisioning token for this device. Copy it and use it on your ESP32.</p>
+  <button onclick="generateToken()">Generate Provisioning Token</button>
+  <input type="text" id="provisionToken" readonly placeholder="Token will appear here">
+  <button onclick="useToken()">Save Token</button>
+
+  <!-- Device List -->
+  <h3>Your Devices</h3>
+  <div id="devices"></div>
+</div>
+
+<script>
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyDa-Gn5AtvCYwzC7GvArnDUrc6HQfdT-U4",
+  authDomain: "login-form-19883.firebaseapp.com",
+  databaseURL: "https://login-form-19883-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "login-form-19883",
+  storageBucket: "login-form-19883.firebasestorage.app",
+  messagingSenderId: "469023290458",
+  appId: "1:469023290458:web:d0d24d8e80ae5c557b5463"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+
+// Authentication
+function signup() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  auth.createUserWithEmailAndPassword(email, password)
+      .then(userCred => showDashboard(userCred.user))
+      .catch(err => alert(err.message));
+}
+function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  auth.signInWithEmailAndPassword(email, password)
+      .then(userCred => showDashboard(userCred.user))
+      .catch(err => alert(err.message));
+}
+
+// Show Dashboard & Load Devices
+function showDashboard(user) {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('userEmail').innerText = user.email;
+
+  const devicesRef = db.ref('users/' + user.uid + '/devices');
+  devicesRef.on('value', snapshot => {
+    const div = document.getElementById('devices');
+    div.innerHTML = '';
+    snapshot.forEach(child => {
+      const device = child.val();
+      const deviceDiv = document.createElement('div');
+      deviceDiv.className = 'device';
+      deviceDiv.innerHTML = `<b>${device.id}</b><br>
+                             Wi-Fi: ${device.wifiSSID || 'Not set'}<br>
+                             <button onclick="configureWifi('${child.key}')">Configure Wi-Fi</button>
+                             <button onclick="toggleLED('${child.key}')">Toggle LED</button>`;
+      div.appendChild(deviceDiv);
+    });
+  });
+}
+
+// Add Device
+function addDevice() {
+  const deviceId = document.getElementById('deviceId').value;
+  const user = auth.currentUser;
+  if (!deviceId || !user) return;
+  const ref = db.ref('users/' + user.uid + '/devices').push();
+  ref.set({ id: deviceId });
+  document.getElementById('deviceId').value = '';
+}
+
+// Configure Wi-Fi
+function configureWifi(deviceKey) {
+  const ssid = prompt("Enter Wi-Fi SSID:");
+  const pass = prompt("Enter Wi-Fi Password:");
+  const user = auth.currentUser;
+  if (!user) return;
+  db.ref(`users/${user.uid}/devices/${deviceKey}/wifi`).set({ ssid, pass });
+  alert("Wi-Fi info saved!");
+}
+
+// Toggle LED
+function toggleLED(deviceKey) {
+  const user = auth.currentUser;
+  if (!user) return;
+  const ledRef = db.ref(`users/${user.uid}/devices/${deviceKey}/led`);
+  ledRef.once('value').then(snapshot => {
+    const current = snapshot.val() || 0;
+    ledRef.set(current === 1 ? 0 : 1);
+  });
+}
+
+// Generate Provisioning Token
+function generateToken() {
+  const token = Math.random().toString(36).substring(2, 12); // 10-char token
+  document.getElementById('provisionToken').value = token;
+}
+
+// Save Token in Firebase
+function useToken() {
+  const token = document.getElementById('provisionToken').value;
+  const user = auth.currentUser;
+  if (!token || !user) return;
+  db.ref('provisioning_tokens/' + token).set({
+    uid: user.uid,
+    createdAt: Date.now()
+  });
+  alert("Provisioning token saved! Use this token on your ESP32.");
+}
+</script>
 </body>
 </html>
